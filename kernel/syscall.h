@@ -21,5 +21,5 @@
 #define SYS_mkdir  20
 #define SYS_close  21
 #define SYS_sync   22
-#define SYS_freepages 23
-#define SYS_sysinfo 24
+#define SYS_freepages 23  // 사용자 스텁이 a7에 넣는 freepages 시스템 호출 번호를 정의한다.
+#define SYS_sysinfo 24    // 사용자 스텁이 a7에 넣는 sysinfo 시스템 호출 번호를 정의한다.

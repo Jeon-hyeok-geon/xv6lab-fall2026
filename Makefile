@@ -129,6 +129,7 @@ mkfs/mkfs: mkfs/mkfs.c $K/fs.h $K/param.h
 # http://www.gnu.org/software/make/manual/html_node/Chained-Rules.html
 .PRECIOUS: %.o
 
+# pagetest와 sysinfotest를 UPROGS에 등록해 xv6 파일 시스템 이미지에 포함한다.
 UPROGS=\
 	$U/_cat\
 	$U/_echo\

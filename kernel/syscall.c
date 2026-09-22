@@ -103,6 +103,7 @@ extern uint64 sys_link(void);
 extern uint64 sys_mkdir(void);
 extern uint64 sys_close(void);
 extern uint64 sys_sync(void);
+// 시스템 호출 디스패치 표에서 사용할 Lab 2 핸들러를 선언한다.
 extern uint64 sys_freepages(void);
 extern uint64 sys_sysinfo(void); 
 
@@ -132,8 +133,8 @@ static uint64 (*syscalls[])(void) = {
   [SYS_mkdir]   = sys_mkdir,
   [SYS_close]   = sys_close,
   [SYS_sync]    = sys_sync,
-  [SYS_freepages] = sys_freepages,
-  [SYS_sysinfo] = sys_sysinfo, 
+  [SYS_freepages] = sys_freepages, // 23번 호출을 남은 페이지 집계 핸들러에 연결한다.
+  [SYS_sysinfo] = sys_sysinfo,     // 24번 호출을 시스템 정보 복사 핸들러에 연결한다.
   // clang-format on
 };
 

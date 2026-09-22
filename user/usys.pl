@@ -43,5 +43,6 @@ entry("sbrk");
 entry("pause");
 entry("uptime");
 entry("sync");
+# 두 사용자 함수가 시스템 호출 번호를 a7에 넣고 ecall하도록 스텁을 생성한다.
 entry("freepages");
 entry ("sysinfo");

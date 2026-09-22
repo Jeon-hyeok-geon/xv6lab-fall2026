@@ -1,7 +1,7 @@
 #define SBRK_ERROR ((char *)-1)
 
 struct stat;
-struct sysinfo;
+struct sysinfo; // 포인터 형식만 선언할 수 있도록 구조체 이름을 미리 알린다.
 
 // system calls
 int fork(void);
@@ -26,8 +26,8 @@ char *sys_sbrk(int, int);
 int pause(int);
 int uptime(void);
 int sync(void);
-uint64 freepages(void);
-int sysinfo(struct sysinfo *);
+uint64 freepages(void);           // 인자 없이 남은 물리 페이지 수를 반환한다.
+int sysinfo(struct sysinfo *);    // 전달한 구조체에 시스템 정보를 채우고 성공 여부를 반환한다.
 
 // ulib.c
 int stat(const char *, struct stat *);

@@ -60,6 +60,7 @@ void            ireclaim(int);
 void*           kalloc(void);
 void            kfree(void *);
 void            kinit(void);
+// 다른 커널 파일에서도 현재 남은 물리 페이지 수를 조회할 수 있게 선언한다.
 uint64          freepages(void);
 
 // log.c
@@ -104,8 +105,11 @@ void            yield(void);
 int             either_copyout(int user_dst, uint64 dst, void *src, uint64 len);
 int             either_copyin(void *dst, int user_src, uint64 src, uint64 len);
 void            procdump(void);
+// 프로세스 테이블에서 사용 중인 슬롯 수를 세는 함수를 선언한다.
 uint64          nproc(void);
+// 현재 구현에서 호출되지 않는 선언이며 실제 시스템 호출 핸들러는 sys_sysinfo()다.
 uint64          sysinfo(void);
+
 // swtch.S
 void            swtch(struct context*, struct context*);
 

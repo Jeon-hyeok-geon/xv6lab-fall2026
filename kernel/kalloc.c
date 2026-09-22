@@ -81,22 +81,24 @@ kalloc(void)
   return (void *)r;
 }
 
-// kernel/kalloc.c  — add at the bottom of the file
-
-// Return the number of free pages.
+// free list를 순회해 현재 할당 가능한 물리 페이지 수를 반환한다.
+// 순회 중 kalloc()이나 kfree()가 목록을 바꾸지 못하도록 kmem.lock을 사용한다.
 uint64
 freepages(void) {
   struct run *r;
   uint64 n = 0;
 
+  // free list 전체를 일관된 상태로 읽기 위해 할당기 락을 획득한다.
   acquire(&kmem.lock);
 
+  // struct run 하나가 빈 물리 페이지 하나를 나타낸다.
   r = kmem.freelist;
   while (r) {
-    n++;
-    r = r->next;
+    n++;          // 현재 노드가 가리키는 빈 페이지를 하나 센다.
+    r = r->next;  // 다음 빈 페이지로 이동한다.
   }
 
+  // 순회가 끝났으므로 다른 CPU가 free list를 수정할 수 있게 락을 해제한다.
   release(&kmem.lock);
 
   return n;

@@ -700,19 +700,21 @@ procdump(void)
   }
 }
 
+// 시스템 호출 진입점에서 실제 집계 함수의 반환값을 사용자에게 그대로 전달한다.
 uint64 
 sys_freepages(void) {
   return freepages();
 }
 
-// Count processes whose state is not UNUSED.
-
+// proc 배열을 순회해 UNUSED가 아닌 프로세스 슬롯 수를 반환한다.
+// ZOMBIE도 wait()로 수거되기 전까지 슬롯을 사용하므로 집계에 포함한다.
 uint64
 nproc(void) {
   struct proc *p;
   uint64 n = 0;
 
   for (p = proc; p < &proc[NPROC]; p++) {
+    // 현재 슬롯의 상태를 읽는 동안 다른 CPU가 상태를 바꾸지 못하게 한다.
     acquire(&p->lock);
     if (p->state != UNUSED) {
       n++;
